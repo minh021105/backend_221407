@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<title>Quản Lý Bán Điện Thoại </title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: white;
+    color: #333;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  button {
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 14px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  button:hover, button:focus {
+    background-color: #0056b3;
+    outline: none;
+  }
+
+  header {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+  }
+  .logo img {
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+  }
+  nav ul {
+    display: flex;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    font-weight: 600;
+    color: white;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  nav a:hover, nav a:focus {
+    background-color: rgba(255,255,255,0.2);
+    outline: none;
+  }
+
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(135deg, #0056b3, #00aaff);
+    color: white;
+    padding: 24px 16px;
+    text-align: center;
+    border-radius: 0 0 20px 20px;
+  }
+  .hero h1 {
+    margin: 0 0 8px 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+  .hero p {
+    font-size: 1.1rem;
+    margin-top: 0;
+  }
+  
+  /* Container */
+  .container {
+    max-width: 350px;
+    margin: 12px auto 40px auto;
+    padding: 0 8px;
+  }
+
+  /* Filter Section */
+  .filter {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter button {
+    background-color: #e9ecef;
+    color: #333;
+    padding: 6px 12px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  .filter button.active,
+  .filter button:hover,
+  .filter button:focus {
+    background-color: #007bff;
+    color: white;
+    outline: none;
+  }
+
+  /* Products */
+  .products {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 350px) {
+    .products {
+      grid-template-columns: 1fr;
+    }
+  }
+  .product-card {
+    background: #00aaff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgb(25 41 71 / 0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.3s ease;
+  }
+  .product-card:hover, .product-card:focus-within {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+  }
+  .product-img {
+    user-select: none;
+  }
+  .product-info {
+    margin-top: 10px;
+    flex-grow: 1;
+  }
+  .product-name {
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0 0 6px 0;
+  }
+  .product-price {
+    font-weight: 700;
+    color: #fbfbfb;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  .buy-btn {
+    align-self: stretch;
+  }
+
+  .about-section {
+    background-color: rgb(0, 191, 255);
+    color: white;
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 24px;
+    text-align: center;
+    margin-top: 30px;
+  }
+  .about-section h2 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
+  .about-section p {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .contact-section {
+    background:rgb(0, 255, 238);
+    padding: 16px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgb(25 41 71 / 0.15);
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+
+  
+  }
+  .contact-section h2 {
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-align: center;
+    
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .contact-form label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #050e8f;
+    font-size: 1rem;
+    resize: vertical; 
+  }
+  .contact-form textarea {
+    min-height: 80px;
+  }
+  .contact-form button {
+    background-color: #0084ff;
+    color: rgb(5, 141, 80);
+    font-weight: 700;
+    margin-top: 8px;
+  }
+  .contact-form button:hover,
+  .contact-form button:focus {
+    background-color: #090909;
+  }
+
+  footer {
+    background-color: #222;
+    color: #bbb;
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  footer a {
+    color: #4dabf7;
+    margin: 0 6px;
+  }
+  footer a:hover,
+  footer a:focus {
+    color: #75aaff;
+    outline: none;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" tabindex="0" aria-label="Trang chủ Thế Giới Điện Thoại Gen Z">
+    <img src="FB_IMG_1729091479387.jpg" alt="Logo Thế Giới Điện Thoại Gen Z" />
+    <span>Thế Giới Điện Thoại Gen Z
+    </span>
+  </div>
+  <nav aria-label="Chức năng chính">
+    <ul>
+      <li><a href="#home" tabindex="0">Trang chủ</a></li>
+      <li><a href="#products" tabindex="0">Sản phẩm</a></li>
+      <li><a href="#about" tabindex="0">Giới thiệu</a></li>
+      <li><a href="#contact" tabindex="0">Liên hệ</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero" id="home" role="banner" aria-label="Mua điện thoại chính hãng, giá tốt">
+  <h1>Khám Phá Điện Thoại Thế Hệ Mới </h1>
+  <p>Mua sắm điện thoại chính hãng, giá" HỌC SINH SINH DIÊN", dịch vụ tận tâm ( tiền hơn thì tâm nhiều hơn).</p>
+</section>
+
+<main class="container" role="main">
+  <section id="products" aria-label="Danh sách sản phẩm điện thoại">
+    <div class="filter" role="navigation" aria-label="Bộ lọc thương hiệu điện thoại">
+      <button class="active" data-filter="all" aria-pressed="true">Tất cả</button>
+      <button data-filter="samsung" aria-pressed="false">Samsung</button>
+      <button data-filter="apple" aria-pressed="false">Apple</button>
+      <button data-filter="xiaomi" aria-pressed="false">Xiaomi</button>
+      <button data-filter="oppo" aria-pressed="false">OPPO</button>
+      <button data-filter="realme" aria-pressed="false">Realme</button>
+      <button data-filter="nokia" aria-pressed="false">Nokia</button> 
+    </div>
+
+    <div class="products" id="product-list" tabindex="0">
+    </div>
+  </section>
+
+  <section class="about-section" id="about" tabindex="0" aria-label="Giới thiệu về Thế Giới Di Động">
+    <h2>Về Thế Giới Điện Thoại Gen Z </h2>
+    <p>Chúng tôi là đơn vị hàng đầu trong lĩnh vực bán điện thoại di động tại Việt Nam với dịch vụ chuyên nghiệp và giá cả super hợp lý.</p>
+  </section>
+
+  <section class="contact-section" id="contact" aria-label="Mẫu liên hệ khách hàng">
+    <h2>Liên Hệ Với Chúng Tôi</h2>
+    <form class="contact-form" id="contact-form" aria-describedby="contact-desc">
+      <label for="name">Họ và tên</label>
+      <input type="text" id="name" name="name" required aria-required="true" placeholder="Nhập họ và tên" />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required aria-required="true" placeholder="Nhập email" />
+
+      <label for="message">Nội dung</label>
+      <textarea id="message" name="message" required aria-required="true" placeholder="Nhập nội dung tin nhắn"></textarea>
+
+      <button type="submit">Gửi</button>
+    </form>
+    <p id="contact-desc" class="visually-hidden">Form liên hệ để gửi thông tin tới Thế Giới Điện Thoại Gen Z</p>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  <p>Bản quyền &copy; 2025 Thế Giới Địện Thoại Gen Z </p>
+  <p>
+    <a href="https://www.facebook.com/profile.php?id=100023368636028" target="_blank" rel="noopener" aria-label="Facebook Minh Lý">Facebook</a> | 
+    <a href="https://youtu.be/OrDB4jpA1g8?si=vShDCPu3QMMn8VGT" target="_blank" rel="noopener" aria-label="YouTube Chính">YouTube</a>
+</footer>
+
+<script>
+  const products = [
+    {id: 1, name: 'Samsung Galaxy S23 Ultra', price: 2999000, brand: 'samsung', img:src= ('S24.jpg') },
+    {id: 2, name: 'iPhone 15 Pro Max 1TTB', price: 3999000, brand: 'apple', img:src= ('ip15.jpg') },
+    {id: 3, name: 'Xiaomi 14 Ultra', price: 1111111, brand: 'xiaomi', img:src= ('14ul.jpg') },
+    {id: 4, name: 'OPPO Reno8 5G', price: 1999000, brand: 'oppo', img: ('opr8.jpg')},
+    {id: 5, name: 'Realme 11 Pro 5G 12GB', price: 2999000, brand: 'realme', img:src= ('real11.jpeg')},
+    {id: 6, name: 'Samsung Galaxy Z Fold4', price: 3999000, brand: 'samsung', img:src= ('z4.jpg')},
+    {id: 7, name: 'iPhone SE 2022', price: 1139000, brand: 'apple', img: src=('se.jpg')},
+    {id: 8, name: 'Nokia Huyền Thoại', price: 999999, brand: 'nokia', img:src=('nokia.webp')},
+  ];
+  function formatPriceVND(price) {
+    return price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+  }
+
+  function renderProducts(filter = 'all') {
+    const container = document.getElementById('product-list');
+    container.innerHTML = '';
+    let filteredProducts = products;
+    if (filter !== 'all') {
+      filteredProducts = products.filter(prod => prod.brand === filter);
+    }
+    if (filteredProducts.length === 0) {
+      container.innerHTML = '<p style="grid-column: span 2; text-align:center; font-weight:700; color:#666;">Không tìm thấy sản phẩm phù hợp.</p>';
+      return;
+    }
+    filteredProducts.forEach(p => {
+      const card = document.createElement('article');
+      card.className = 'product-card';
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', p.name + ', giá ' + formatPriceVND(p.price));
+      card.innerHTML = `
+        <div class="product-img">
+          <img src="${p.img}" alt="${p.name}" loading="lazy" />
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">${p.name}</h3>
+          <p class="product-price">${formatPriceVND(p.price)}</p>
+        </div>
+        <button class="buy-btn" aria-label="Mua ${p.name}">Mua ngay</button>
+      `;
+      card.querySelector('button').addEventListener('click', () => {
+        alert('Chúc mừng bạn đã mua thành công: ' + p.name + ' với giá ' + formatPriceVND(p.price) + ' chúng tôi sẽ liên hệ sớm nhất đến bạn để xác nhận địa chỉ giao hàng.');
+      });
+      container.appendChild(card);
+    });
+  }
+
+  const filterButtons = document.querySelectorAll('.filter button');
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+
+      const filterValue = btn.getAttribute('data-filter');
+      renderProducts(filterValue);
+    });
+  });
+
+  const contactForm = document.getElementById('contact-form');
+  contactForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+    const name = formData.get('name').trim();
+    const email = formData.get('email').trim();
+    const message = formData.get('message').trim();
+
+    if (!name || !email || !message) {
+      alert('Vui lòng điền đầy đủ thông tin và vấn đề của quý khách.');
+      return;
+    }
+    alert(`Cảm ơn ${name} đã liên hệ với chúng tôi! Chúng tôi sẽ phản hồi sớm qua  ${email}.`);
+    contactForm.reset();
+  });
+
+
+  renderProducts();
+</script>
+</body>
+</html>
+</content>
+</create_file>
